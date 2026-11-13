@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>测一测，专属于你的本命浪漫信物</title>
+<style>
+  :root{
+    --acc:#7d5be0; --acc2:#a58cf0; --gold:#a8762c;
+    --bg1:#f7f4ff; --bg2:#e9e2fb;
+    --ink:#2e1f55; --sub:#8f85ad; --card:#ffffff; --line:#d9cdf5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh}
+  .wrap{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:18px 18px 28px}
+
+  /* ---------- 首页 ---------- */
+  .hero{text-align:center;padding:26px 8px 18px}
+  .hero .emoji{font-size:54px;line-height:1}
+  .hero h1{font-size:25px;line-height:1.45;margin:14px 4px 8px;font-weight:800}
+  .hero h1 .hl{color:var(--acc)}
+  .hero .sub{font-size:14px;color:var(--sub);margin-bottom:18px;line-height:1.7}
+  .tags{display:flex;flex-direction:column;gap:9px;margin:6px 4px 20px}
+  .tag{background:var(--card);border-radius:14px;padding:12px 14px;font-size:14px;text-align:left;
+    box-shadow:0 2px 10px rgba(125,91,224,.10);border:1px solid var(--line)}
+  .tag b{color:var(--acc)}
+  .btn{display:block;width:100%;padding:16px;border:none;border-radius:999px;font-size:18px;font-weight:700;
+    color:#fff;background:linear-gradient(90deg,var(--acc),var(--acc2));cursor:pointer;
+    box-shadow:0 6px 18px rgba(125,91,224,.30);letter-spacing:2px}
+  .btn:active{transform:scale(.97)}
+  .footnote{text-align:center;font-size:12px;color:#b3a7cc;margin-top:14px;line-height:1.7}
+  .deco{margin-top:22px;font-size:13px;color:#c5b8dd;text-align:center;line-height:1.9}
+
+  /* ---------- 答题 ---------- */
+  .bar{height:8px;background:#dcd2f3;border-radius:99px;overflow:hidden;margin:10px 0 6px}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:99px;transition:width .3s}
+  .count{text-align:right;font-size:12px;color:var(--sub);margin-bottom:10px}
+  .q{background:var(--card);border-radius:18px;padding:20px 16px;font-size:17px;font-weight:700;line-height:1.6;
+    box-shadow:0 4px 14px rgba(125,91,224,.12);margin-bottom:16px}
+  .q .num{display:inline-block;font-size:12px;font-weight:600;color:#fff;background:var(--acc2);
+    border-radius:99px;padding:3px 10px;margin-bottom:10px}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{background:var(--card);border:1.5px solid var(--line);border-radius:15px;padding:14px 15px;font-size:15px;
+    line-height:1.55;text-align:left;cursor:pointer;transition:.15s;color:var(--ink)}
+  .opt:active{background:var(--bg1);border-color:var(--acc);transform:scale(.98)}
+
+  /* ---------- 结果 ---------- */
+  .result{text-align:center;padding-top:22px}
+  .result .emoji{font-size:56px}
+  .result .name{font-size:24px;font-weight:800;color:var(--acc);margin-top:10px}
+  .result .tagline{font-size:15px;color:var(--gold);margin-top:6px;font-weight:700}
+  .card{background:var(--card);border-radius:18px;padding:18px 16px;text-align:left;margin-top:16px;
+    box-shadow:0 4px 14px rgba(125,91,224,.12);font-size:14px;line-height:1.85}
+  .card h3{font-size:13px;color:var(--acc);margin-bottom:8px;letter-spacing:1px}
+  .card.fix{border-left:4px solid var(--gold)}
+  .card.fix h3{color:var(--gold)}
+  .stat{font-size:12px;color:var(--sub);margin-top:14px;line-height:1.7}
+  .share{margin-top:16px;padding:14px;border:none;border-radius:999px;font-size:15px;font-weight:700;
+    color:var(--acc);background:#fff;border:1.5px solid var(--acc);cursor:pointer;width:100%}
+  .again{margin-top:10px}
+  .hidden{display:none}
+  @keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+  .pop{animation:pop .35s ease}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 首页 -->
+  <section id="home">
+    <div class="hero">
+      <div class="emoji">🎁</div>
+      <h1>测一测，专属于你的<br><span class="hl">本命浪漫信物</span></h1>
+      <div class="sub">手写信、星星瓶、旧票根——<br>你的浪漫，藏在哪一件里</div>
+    </div>
+    <div class="tags">
+      <div class="tag">✅ <b>信物倾向</b>｜哪种纪念方式会让你上瘾</div>
+      <div class="tag">✅ <b>浪漫体质</b>｜你把心意放在哪里</div>
+      <div class="tag">✅ <b>本命信物</b>｜十件信物对号入座</div>
+      <div class="tag">✅ <b>守护指南</b>｜别让浪漫被弄丢</div>
+    </div>
+    <button class="btn" onclick="start()">点击测试 →</button>
+    <div class="footnote">趣味测试仅供娱乐，不构成任何情感建议</div>
+    <div class="deco">32 道浪漫场景题 · 10 件本命信物 · 约 3 分钟<br>答完记得回评论区晒信物 👀</div>
+  </section>
+
+  <!-- 答题 -->
+  <section id="quiz" class="hidden">
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="count"><span id="cnow">1</span> / 32</div>
+    <div class="q"><span class="num" id="qnum"></span><br><span id="qtext"></span></div>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <!-- 结果 -->
+  <section id="res" class="hidden">
+    <div class="result">
+      <div class="emoji pop" id="remoji">🎁</div>
+      <div class="name pop" id="rname"></div>
+      <div class="tagline pop" id="rtag"></div>
+      <div class="card"><h3>🔮 信物档案</h3><div id="rbody"></div></div>
+      <div class="card"><h3>💝 这件信物，这样用</h3><div id="rstep"></div></div>
+      <div class="card fix"><h3>⚠️ 你最容易弄丢浪漫的地方</h3><div id="rwarn"></div></div>
+      <div class="stat" id="rstat"></div>
+      <button class="share" onclick="copyRes()">📋 复制信物，去评论区晒同款</button>
+      <button class="share again" onclick="location.reload()">🔄 再测一次（换个心情？）</button>
+      <div class="footnote">趣味测试仅供娱乐，不构成任何情感建议</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+const TYPES = {
+ A:{e:"✉️",n:"手写信笺型",t:"慢一点，但每个字都算数",
+    b:"你信浪漫要落在纸上才算数。打字可以撤回，说出口可以否认，只有笔迹骗不了人。你认真起来有点笨拙——字要挑纸、话要打草稿——但正因为慢，你说的每句话都带着重量。你的爱有存根，翻出来还能重读一遍。",
+    s:"这次别等特别的日子：挑一张喜欢的纸，把最近没说出口的一句感谢写下来，塞进TA常用的那本书里。",
+    w:"你容易把「写」当成终点，写完就心安，忘了人要的是回应。信物是入口，不是替代——写完记得抬头看看对方。"},
+ B:{e:"✨",n:"星星玻璃瓶型",t:"一颗一颗攒出来的心事",
+    b:"你相信浪漫是攒出来的。一句话、一件小事、一个纪念日，你都往心里那个玻璃瓶里扔一颗星星，攒到某天倒出来，就是一整条银河。你的浪漫不靠某一刻的爆发，靠的是日复一日的计数——别人记不了那么久，你记得住。",
+    s:"给现在最重要的人开一个「星星罐」：每次TA让你心里一动，就写一张小纸条存进去，年底连瓶子一起送出去。",
+    w:"攒是天赋，也是执念：瓶子里如果存了太多没倒出来的心事，攒着攒着就成了委屈。记得定期倒一次，让人看见。"},
+ C:{e:"🎫",n:"票根收藏型",t:"舍不得扔的时光都在这里",
+    b:"你的钱包夹层里一定有一沓舍不得扔的东西：电影票、车票、展览的入场券。对你来说，浪漫不是礼物本身，是「我们一起去过」的凭证。你活在具体的经历里，一摸到那些纸片，整段时光就能原样播放。",
+    s:"把散落的票根整理成一本册子，每张旁边写一行字——地点、当天谁说了什么。这是你送得起也送得出的最贵礼物。",
+    w:"你容易收藏过去多过创造现在。旧票根翻十遍，不如再买两张新的。别让收藏变成替代品。"},
+ D:{e:"🎧",n:"半边耳机型",t:"同一首歌，两个声部",
+    b:"你的浪漫走耳朵：把耳机分一边、把歌单甩过去、在副歌看TA的反应。你不太说漂亮话，但你会说「这首歌像你」。对你来说，同频比仪式重要——能一起听懂同一首歌的人，胜过送一车玫瑰的人。",
+    s:"给TA建一份专属歌单，按认识的时间排序，第一首放你们第一次聊到的歌——不用解释，TA会懂。",
+    w:"你习惯用歌代替话，但歌能传情也能含糊。重要的心意，歌词说完之后，请你自己再开口说一遍。"},
+ E:{e:"🧣",n:"手织围巾型",t:"把温度织进针脚里",
+    b:"你的浪漫是有温度的物理防御：天冷、下雨、TA咳嗽一声，你的雷达就响了。你不太说「我在乎你」，你只会说「围巾戴上」。你相信照顾是最好的情话，而照顾这件事，你做得比谁都细。",
+    s:"这个冬天，为TA做一件只有你做得到的小事：织一双手套、备一条毯子、在包里常备一把伞——然后别邀功。",
+    w:"你的温柔容易变成背景音：做得太日常，别人会以为那是理所当然。偶尔说一句「这个是专门给你的」，温度才被看见。"},
+ F:{e:"📷",n:"拍立得相纸型",t:"心动要当场显影",
+    b:"你是浪漫的现场记录员：侧脸、逆光、半盘没吃完的饭，你都想留住。你相信瞬间比承诺可靠——承诺会变，照片不会。你的爱有一本随时能翻的相册，翻到哪页，那天就回来哪天。",
+    s:"把手机里躺了一年的照片洗出来，挑十张装进一本小册子，写上日期，当作「时光册」送出去。",
+    w:"你容易隔着屏幕看生活：为了拍下来，反而错过了在场。有些瞬间，先看完再拍，或者干脆只看。"},
+ G:{e:"🪙",n:"幸运硬币型",t:"兜里揣着的那点运气",
+    b:"你信巧合胜过信计划：刚好赶上的末班车、刚好都喜欢的歌、路过摊位刚好淘到的小东西。你的浪漫带着一点点赌性和虔诚——把一枚硬币当护身符，把一次偶遇当预兆。你让浪漫始终留着「不知道下一秒」的悬念。",
+    s:"给TA选一件「护身小物」——一枚硬币、一枚小符、一颗打磨过的石头，告诉TA：揣着它，替我挡坏运气。",
+    w:"你的浪漫怕被「计划」杀掉，但生活里全是计划。留一成给巧合就好，别把重要的事也全押给运气。"},
+ H:{e:"🔑",n:"钥匙扣挂件型",t:"天天摩挲的贴身存在",
+    b:"你的浪漫讲存在感：一件小东西挂在包上、揣在兜里、天天摸得到，就等于人一直在。你不擅长盛大的表达，但你会把TA的东西放进自己包里，把自己送的物件磨到发亮。对你来说，「随身」就是「随身带心」。",
+    s:"挑一件轻巧耐用的小物——挂件、钥匙扣、一枚磨砂的牌子——和TA一人一件，约定「带着，就算互道早安」。",
+    w:"你容易用「物在」代替「人在」。东西替你陪着TA没问题，但别让它替你说话——该出现的场合，人要出现。"},
+ I:{e:"🍜",n:"记口味的菜谱型",t:"爱是记得你爱吃什么",
+    b:"你的浪漫在烟火气里：记得TA不吃香菜、记得TA的辣度上限、记得TA随口说过想吃的东西。你不太搞仪式，但你让「被记住」这件事每天发生三顿。别人送花，你送热乎的——胃离心的距离，你最清楚。",
+    s:"从今天起记一本「口味档案」：TA爱吃的、忌口的、念叨过的，一条条攒。某天全部端上桌，那一刻叫本命。",
+    w:"你的爱容易做成「服务」：一直付出，忘了自己也该被记挂。记得也把你的口味说出来，让对方为你记一次。"},
+ J:{e:"🧸",n:"旧玩偶型",t:"越旧越舍不得换",
+    b:"你的浪漫有恋旧体质：用旧的东西才有安全感，换新的像背叛。你的信物可能是从小学抱到现在的那只玩偶、一件洗得发白的T恤。你信奉时间的含金量——陪你最久的东西，就是最懂你的东西。",
+    s:"给那件最旧的宝贝做一次「保养」：缝补、清洗、拍一张它现在的样子。然后告诉那个人：这是我的信物，别给我换新的。",
+    w:"恋旧是深情，也可能是关门：旧物挡住的不只是新东西，还有新的人。给「还没发生的好事」留一个位置。"}
+};
+
+const QS = [
+ ["看到别人晒的纪念方式，你最羡慕哪种：",
+  ["一瓶攒满的折纸星星","B"],
+  ["一整盒攒了十年的票根","C"],
+  ["每年一封手写的信","A"],
+  ["从小学抱到现在的旧玩偶","J"]],
+ ["你保存旧物的习惯是：",
+  ["越攒越多，全都舍不得扔","C"],
+  ["扔之前一定先拍张照","F"],
+  ["重要的那件天天随身带着","H"],
+  ["再旧也绝不换新","J"]],
+ ["别人夸你浪漫，多半是因为你：",
+  ["总记得别人没留意的小事","I"],
+  ["身上总带着为TA备的小东西","H"],
+  ["认旧：用过的不换，认定的不变","J"],
+  ["天一冷就惦记别人冷不冷","E"]],
+ ["心动发生的那一秒，你的第一反应是：",
+  ["想当场拍下来","F"],
+  ["想找个罐子把它装起来","B"],
+  ["想写下来，又有点不好意思","A"],
+  ["想马上放首歌给TA听","D"]],
+ ["你对仪式感的态度是：",
+  ["必须有，攒够数才算完整","B"],
+  ["有更好，没有也不碍事","H"],
+  ["仪式是形式，暖到人才算","E"],
+  ["形式不重要，碰巧的才浪漫","G"]],
+ ["搬家翻出一箱旧物，你会：",
+  ["一件一件看完，再收好","C"],
+  ["留三件最舍不得的","B"],
+  ["那个旧玩偶死也不丢","J"],
+  ["最顺手的直接带走","H"]],
+ ["你觉得信物最重要的属性是：",
+  ["是手作的，机器做的不行","E"],
+  ["天天摸得着，不离身","H"],
+  ["背后有只属于我们的故事","C"],
+  ["带着一点运气","G"]],
+ ["收到礼物，你最先注意的是：",
+  ["心意藏在哪个细节里","B"],
+  ["实不实用","I"],
+  ["TA为了它跑了多远","C"],
+  ["是不是用得久、旧了也好看","J"]],
+ ["你的恋爱纪念方式更接近：",
+  ["攒一罐星星，攒满才算数","B"],
+  ["每一场都留票根","C"],
+  ["一年一封信，只多不少","A"],
+  ["亲手织点什么","E"]],
+ ["如果浪漫有声音，你听到的是：",
+  ["织毛线时针脚的窸窣声","E"],
+  ["耳机里两个人共用的那首歌","D"],
+  ["厨房里滋啦作响的锅铲","I"],
+  ["快门按下去的那声咔嚓","F"]],
+ ["朋友向你讨表白主意，你建议TA：",
+  ["亲笔写点什么","A"],
+  ["送个能随身带走的物件","H"],
+  ["制造一场只有你们懂的经历","C"],
+  ["放一首只有你们懂的歌","D"]],
+ ["你手机相册里最多的是：",
+  ["随手拍的天空和路边小物","F"],
+  ["和人的合影","C"],
+  ["音乐App的年度听歌截图","D"],
+  ["保存了很多年的旧照片","J"]],
+ ["天冷了，你更愿意为TA做：",
+  ["织一条围巾","E"],
+  ["学做TA念叨过的那道菜","I"],
+  ["买一个护身的小物件给TA","G"],
+  ["把TA常用的东西放进自己包里","H"]],
+ ["「本命信物」和普通礼物最大的区别，你觉得是：",
+  ["它的来路带着巧合，像注定的","G"],
+  ["用旧了也舍不得换","J"],
+  ["它替你保管着一段时光","C"],
+  ["天天带在身上才踏实","H"]],
+ ["约会你想安排的是：",
+  ["回老地方，坐老位置","C"],
+  ["去路边摊碰运气，看能淘到什么","G"],
+  ["在家做一顿饭","I"],
+  ["去光线最好的地方，把TA拍下来","F"]],
+ ["你对「惊喜」的定义是：",
+  ["把想说的话藏进一首歌里，那天放给TA","D"],
+  ["路过时顺手带走的小玩意","G"],
+  ["不打招呼就出现在面前","F"],
+  ["悄悄放进TA包里的那把伞","E"]],
+ ["一段关系结束了，信物你会：",
+  ["收进盒子，封存","B"],
+  ["继续用，它没做错什么","J"],
+  ["拍张照留念，然后放下","F"],
+  ["写一封不寄出的信","A"]],
+ ["哪种告白最打动你：",
+  ["写了很久的一封信","A"],
+  ["攒满整整一瓶的星星","B"],
+  ["一沓一起看过的票根","C"],
+  ["TA递来的一枚护身符","G"]],
+ ["你的浪漫气质更接近：",
+  ["书面而郑重","A"],
+  ["贴身而日常","H"],
+  ["瞬间而滚烫","F"],
+  ["陪听而同频","D"]],
+ ["旅行纪念品你倾向带：",
+  ["把一路的门票票根都收好","C"],
+  ["一对小挂件，一人一个","H"],
+  ["什么都不买，拍够照片","F"],
+  ["一枚当地的硬币或小符","G"]],
+ ["你的聊天记录：",
+  ["再旧也留着，舍不得删","J"],
+  ["只留几张关键截图","F"],
+  ["收藏TA发来的每一条语音","D"],
+  ["定时清空，心里记得就行","I"]],
+ ["朋友结婚，让你挑一份祝福信物：",
+  ["亲手折的一罐星星","B"],
+  ["一对定制小挂件","H"],
+  ["把TA用旧的东西翻新后再送TA","J"],
+  ["一顿做给小两口的饭","I"]],
+ ["你眼中最浪漫的日常：",
+  ["每晚认真写下的晚安","A"],
+  ["一起吃过的一千顿饭","I"],
+  ["顺路带回去的每一样小东西","G"],
+  ["包里常备给TA的那把伞","E"]],
+ ["心情不好的那晚，你会：",
+  ["把情绪写下来","A"],
+  ["循环一首旧歌","D"],
+  ["去吃一顿热乎的","I"],
+  ["抱着旧玩偶睡","J"]],
+ ["你最想留住哪个瞬间：",
+  ["TA认真说话的侧脸","F"],
+  ["TA在雨里递过来的那把伞","E"],
+  ["合唱到跑调的一整场","D"],
+  ["路过庙里TA硬塞给你的护身符","G"]],
+ ["给十年后的自己存一样东西，你存：",
+  ["一封信","A"],
+  ["一罐按年份攒起来的星星","B"],
+  ["一沓票根和照片","C"],
+  ["一枚今年的硬币","G"]],
+ ["你挑随身物件的标准：",
+  ["背后有故事","C"],
+  ["轻巧，能不离身","H"],
+  ["看一眼心里就暖","E"],
+  ["旧一点才好","J"]],
+ ["对方随口说想吃一样东西，你会：",
+  ["当天就带TA去吃","I"],
+  ["偷偷记着，攒到纪念日一起","B"],
+  ["看哪天路过，刚好就买","G"],
+  ["立刻出门去买","F"]],
+ ["你觉得浪漫最怕：",
+  ["聊得再多，却没一起听过一首歌","D"],
+  ["贵重，却从不贴身","H"],
+  ["轰轰烈烈，转瞬即逝","F"],
+  ["按部就班，没有一点意外","G"]],
+ ["深夜对方发来「睡不着」，你会：",
+  ["陪TA聊到睡着","D"],
+  ["煮碗夜宵送过去","I"],
+  ["把TA裹进毯子里","E"],
+  ["认真回一段写好的话","A"]],
+ ["你想对另一半说：",
+  ["给我写信吧，我想留着你写的字","A"],
+  ["陪我把星星攒满一瓶","B"],
+  ["别买贵的，做饭给我就行","I"],
+  ["冬天给我织点什么吧","E"]],
+ ["用一个词形容你的浪漫：",
+  ["郑重","A"],
+  ["攒","B"],
+  ["记得","I"],
+  ["同频","D"]]
+];
+
+let idx = 0, score = {};
+const $ = id => document.getElementById(id);
+
+function start(){
+  idx = 0; score = {};
+  $("home").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  render();
+}
+function render(){
+  const q = QS[idx];
+  $("qnum").textContent = "第 " + (idx+1) + " 题";
+  $("qtext").textContent = q[0];
+  $("cnow").textContent = idx+1;
+  $("pbar").style.width = (idx/32*100) + "%";
+  const box = $("opts"); box.innerHTML = "";
+  q.slice(1).forEach(([text,key])=>{
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = text;
+    b.onclick = ()=>pick(key);
+    box.appendChild(b);
+  });
+  window.scrollTo(0,0);
+}
+function pick(key){
+  score[key] = (score[key]||0) + 1;
+  idx++;
+  if(idx < QS.length) render(); else show();
+}
+function show(){
+  $("quiz").classList.add("hidden");
+  $("res").classList.remove("hidden");
+  const order = ["A","B","C","D","E","F","G","H","I","J"];
+  let best = order[0];
+  order.forEach(k=>{ if((score[k]||0) > (score[best]||0)) best = k; });
+  const t = TYPES[best];
+  $("remoji").textContent = t.e;
+  $("rname").textContent = t.n;
+  $("rtag").textContent = "—— " + t.t + " ——";
+  $("rbody").textContent = t.b;
+  $("rstep").textContent = t.s;
+  $("rwarn").textContent = t.w;
+  const sorted = order.map(k=>[k,score[k]||0]).sort((a,b)=>b[1]-a[1]);
+  const second = TYPES[sorted[1][0]];
+  $("rstat").textContent = "次高信物：" + second.n + "（" + second.t + "）· 32 题答完，" + (score[best]||0) + " 题指向这个信物。信物不分贵贱，能替你记住心意的那件，就是本命。";
+  $("res").dataset.text = "我在「测一测，专属于你的本命浪漫信物」里测出了【" + t.n + "】："
+    + t.t + "。" + t.s + " 来测测你的信物 →";
+  window.scrollTo(0,0);
+}
+function copyRes(){
+  const text = $("res").dataset.text;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>alert("已复制，去评论区晒信物吧 👀"));
+  }else{
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta);
+    alert("已复制，去评论区晒信物吧 👀");
+  }
+}
+</script>
+</body>
+</html>
